@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="none">
+    <title>KiKIT Friendly Publication Helper</title>
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons/css/academicons.min.css">
+  </head>
+
+  <body>
+    <style>
+     header {
+       border-bottom: 2px rgba(0,0,255,0.3) solid;
+     }
+     main {
+       padding:2em;
+     }
+    </style>
+
+    <div class="content">
+    {% block header %}
+    <header>
+	{% for pi in pis %}
+	<a href="{{pi}}.html" class="btn btn-link">{{pi}}</a>
+	{% endfor %}
+    </header>
+    {% endblock %}
+
+    {%block main%}
+    <main>
+    {% block content %}
+    {{ content|safe }}
+    {% endblock %}
+    </main>
+    {%endblock%}
+
+    <footer>
+    {% block footer %}
+    {% endblock %}
+    </footer>
+
+    </div>
+  </body>
+  <script language="javascript" src="script.js"></script>
+</html>

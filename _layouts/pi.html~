@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+
+{% macro bibentry(entry) %}
+
+{% endmacro %}
+
+
+{% block main %}
+<style>
+  .True {
+    background: rgba(0,255,0,.3);
+    text-align:center;
+  }
+
+  .False {
+    background: rgba(255,0,0,0.3);
+    text-align:center;
+  }
+</style>
+
+
+
+<main>
+  <h1>{{name}}</h1>
+
+  <table class="table">
+    <tr>
+      <th>Title</th>
+      <th>Year</th>
+      <th>DBLP</th>
+      <th>Library</th>
+      <th>KiKIT</th>
+    </tr>
+
+    {% for entry in entries %}
+    <tr>
+      <td>{{ entry.title }}</td>
+      <td>{{ entry.year }}</td>
+      <td class="{{ entry.dblp }}">&nbsp;</td>
+      <td class="{{ entry.kit }}">&nbsp;</td>
+      <td class="{{ entry.kikit }}">&nbsp;</td>
+    </tr>
+    {% endfor %}
+  </table>
+
+  <!--
+  <details>
+    <summary>KiKIT</summary>
+    {% for entry in kikit %}
+    {{ bibentry(entry) }}
+    {% endfor %}
+  </details>
+
+  <details>
+    <summary>DBLP</summary>
+    {% for entry in dblp %}
+    {{ bibentry(entry) }}
+    {% endfor %}
+  </details>
+
+  <details>
+    <summary>All publication in the library</summary>
+    {% for entry in bib %}
+    {{ bibentry(entry) }}
+    {% endfor %}
+  </details>
+  -->
+
+</main>
+{% endblock %}

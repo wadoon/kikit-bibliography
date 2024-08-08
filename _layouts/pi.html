@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% macro bibentry(entry) %}
+
+{% endmacro %}
+
+
+{% block main %}
+<style>
+ .True {
+   background: rgba(0,255,0,.3);
+   text-align:center;
+ }
+
+ .False {
+   background: rgba(255,0,0,0.3);
+   text-align:center;
+ }
+
+ .doi, .kitid {
+   font-size:70%; font-family:monospace;
+ }
+</style>
+
+
+
+<main>
+  <h1>{{name}}</h1>
+
+  <table class="table">
+    <tr>
+      <!-- <th></th> -->
+      <th>Title</th>
+      <th>Year</th>
+      <th>DBLP</th>
+      <th>Library</th>
+      <th>KiKIT</th>
+    </tr>
+
+    {% for entry in entries %}
+    <tr>
+      <!-- <td><input type="checkbox" id="{{entry.doi}}"> -->
+	<td><label for="{{entry.doi}}"> {{ entry.title }}</label>
+	<br>
+	<span class="doi"><a href="https://doi.org/{{entry.doi}}"><i class="ai ai-doi"></i>{{entry.doi}}</a></span>
+	{% if entry.kit_id %}
+	&nbsp;	&nbsp;
+	<span class="kitid"><a href="https://publikationen.bibliothek.kit.edu/{{entry.kit_id}}"><i class="ai ai-archive"></i>{{entry.kit_id}}</a></span>
+	{% endif %}
+      </td>
+      <td>{{ entry.year }}</td>
+      <td class="{{ entry.dblp }}">&nbsp;</td>
+      <td class="{{ entry.kit }}">&nbsp;</td>
+      <td class="{{ entry.kikit }}">&nbsp;</td>
+    </tr>
+    {% endfor %}
+  </table>
+
+
+  <!--
+  <h2>Mail for the library</h2>
+  <textarea id="txt" rows="25"></textarea>
+  -->
+
+  <!--
+  <details>
+    <summary>KiKIT</summary>
+    {% for entry in kikit %}
+    {{ bibentry(entry) }}
+    {% endfor %}
+  </details>
+
+  <details>
+    <summary>DBLP</summary>
+    {% for entry in dblp %}
+    {{ bibentry(entry) }}
+    {% endfor %}
+  </details>
+
+  <details>
+    <summary>All publication in the library</summary>
+    {% for entry in bib %}
+    {{ bibentry(entry) }}
+    {% endfor %}
+  </details>
+  -->
+</main>
+
+<script language="javascript">
+ let PI_NAME = "{{name}}";
+</script>
+
+{% endblock %}
