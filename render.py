@@ -4,9 +4,8 @@ import os
 import os.path
 import sys
 import shutil
-import markdown2
 import yaml
-import requests, json
+import json
 import xml.etree.ElementTree as ET
 from pprint import pprint
 
