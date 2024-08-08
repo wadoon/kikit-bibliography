@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+from collections import namedtuple
 import os
 import os.path
 import sys
@@ -46,6 +47,8 @@ class BibEntry:
 def render():
     for pi, data in CONFIG.items():
         _render(pi)
+
+    render_index()
 
 def _readjson(f):
     def as_bib_entry(jpub):
@@ -109,6 +112,21 @@ def _render(name):
 
     with open(PUBLIC/f"{name}.html", 'w') as fh:
         fh.write(template.render(name=name,dblp=dblp, bib=bib, kikit=kikit, entries=entries, pis=CONFIG))
+
+
+def render_index():
+    PI = namedtuple("PI", "name, everything, dblp, kit, kikit")
+    data = []
+
+    for name, entries in ENTRIES.items():
+        dblp  = len([x for x in entries if x.dblp])
+        kit   = len([x for x in entries if x.kit])
+        kikit = len([x for x in entries if x.kikit])
+        data.append(PI(name, len(entries), dblp, kit, kikit))
+    
+    template = env.get_template("index.html")
+    with open(PUBLIC/f"index.html", 'w') as fh:
+        fh.write(template.render(data=data))
 
 
 def render_css():

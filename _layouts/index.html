@@ -1,30 +1,28 @@
 {% extends "base.html" %}
 
 {% block main %}
-<div class="hero">
-  <div class="hero-body" style="padding:3em;    background: url(path16.svg);
-    background-position: right;
-    background-repeat: no-repeat;
-    background-size: 25em; width:60em; margin:auto;
-    background-blend-mode: color;">
-    <h1>KeY Symposium 2024
-      <br>
-      &nbsp;      &nbsp;      &nbsp;
-      <span style="font-size:80%">incl. the first KeYmaera Day</span>
-    </h1>
-
-    <p>dedicated to the 25h birthday of the KeY project.</p>
-
-    <p>
-      29th July to 1st Aug. 2024<br>
-      <a class="text-light" href="https://www.haus-der-kirche.ekiba.de">Haus der Kirche</a>,
-      Bad Herrenalb,
-      Germany<br>(in the black forest near Karlsruhe)</p>
-    </p>
-  </div>
-</div>
+<style>
+ .column {
+   border: 1px solid black;
+ }
+</style>
 
 <main>
-  {{content|safe}}
+  <h1>KiKIT's Friendly Publication Helper</h1>
+
+  <div class="container">
+    <div class="columns">
+      {% for entry in data %}
+      <div class="column col-3">
+	<h2><a href="{{entry.name}}.html">{{entry.name}}</a></h2>
+
+	All: {{entry.everything}}<br>
+	DBLP: {{entry.dblp}}   ({{"%2.f"|format(entry.dblp*100/entry.everything)}}%)<br>
+	KIT: {{entry.kit}}     ({{"%2.f"|format(entry.kit*100/entry.everything)}}%)<br>
+	KiKIT: {{entry.kikit}} ({{"%2.f"|format(entry.kikit*100/entry.everything)}}%)
+      </div>
+      {% endfor %}
+    </div>
+  </div>
 </main>
 {% endblock %}
