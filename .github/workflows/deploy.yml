@@ -29,11 +29,11 @@ jobs:
       - name: Install Python deps
         run: pip install -U -r requirements.txt
 
+      - name: Download bibliography information
+        run: python download.py
+
       - name: Render Pages
         run: python render.py
-
-      - name: Generate Calender
-        run: python ical_gen.py
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
