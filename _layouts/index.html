@@ -5,6 +5,10 @@
  .column {
    border: 1px solid black;
  }
+
+ td,th {
+   text-align: right;
+ }
 </style>
 
 <main>
@@ -16,11 +20,37 @@
       <div class="column col-3">
 	<h2><a href="{{entry.name}}.html">{{entry.name}}</a></h2>
 
-	All: {{entry.everything}}<br>
-	DBLP: {{entry.dblp}}   ({{"%2.f"|format(entry.dblp*100/entry.everything)}}%)<br>
-	KIT: {{entry.kit}}     ({{"%2.f"|format(entry.kit*100/entry.everything)}}%)<br>
-	Topic ESS: {{entry.ess}}     ({{"%2.f"|format(entry.ess*100/entry.everything)}}%)<br>
-	KiKIT: {{entry.kikit}} ({{"%2.f"|format(entry.kikit*100/entry.everything)}}%)
+	<table class="table">
+	  <tr>
+	    <th>Year</th>
+	    <th>All</th>
+	    <th>DBLP</th>
+	    <th>KIT</th>
+	    <th>Topic ESS</th>
+	    <th>KiKIT</th>
+	  </tr>
+	  {% for year, line in entry.years.items() %}
+	  <tr>
+	    <td>{{year}}</td>
+	    <td>{{line.everything}}</td>
+	    <td><acronym title="{{"%2.f"|format(line.dblp*100/line.everything)}}%">{{line.dblp}}</acronym></td>
+	    <td><acronym title="({{"%2.f"|format(line.kit*100/line.everything)}}%)">{{line.kit}}</acronym></td>
+	    <td><acronym title="({{"%2.f"|format(line.ess*100/line.everything)}}%)">{{line.ess}}</acronym></td>
+	    <td><acronym title="({{"%2.f"|format(line.kikit*100/line.everything)}}%)">{{line.kikit}}</acronym></td>
+	  </tr>
+	  {% endfor %}
+
+	  {% set line = entry.all %}
+	  <tr>
+	    <th>Sum:</td>
+	    <th>{{line.everything}}</td>
+	    <th>{{line.dblp}}   ({{"%2.f"|format(line.dblp*100/line.everything)}}%)</th>
+	    <th>{{line.kit}}     ({{"%2.f"|format(line.kit*100/line.everything)}}%)</th>
+	    <th>{{line.ess}}     ({{"%2.f"|format(line.ess*100/line.everything)}}%)</th>
+	    <th>{{line.kikit}} ({{"%2.f"|format(line.kikit*100/line.everything)}}%)</th>
+	  </tr>
+
+	</table>
       </div>
       {% endfor %}
     </div>

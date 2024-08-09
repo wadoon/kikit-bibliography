@@ -132,16 +132,25 @@ def _render(name):
             ))
 
 def render_index():
-    PI = namedtuple("PI", "name, everything, dblp, kit, kikit, ess")
+    Line = namedtuple("YEARS", "everything, dblp, kit, kikit, ess")
+    PI = namedtuple("PI", "name, years, all")
     data = []
 
-    for name, entries in ENTRIES.items():
+    def aggregate(entries):
         dblp  = len([x for x in entries if x.dblp])
         kit   = len([x for x in entries if x.kit])
         kikit = len([x for x in entries if x.kikit])
         ess   = len([x for x in entries if x.ess])
-        data.append(PI(name, len(entries), dblp, kit, kikit, ess))
-    
+        return Line(len(entries), dblp, kit, kikit, ess)
+
+    def aggregate_year(entries, year):
+        return aggregate([x for x in entries if x.year == year])
+
+    for name, entries in ENTRIES.items():
+        data.append(PI(name,
+                       { x : aggregate_year(entries, x) for x in range(2021,2025)},
+                       aggregate(entries)))
+
     template = env.get_template("index.html")
     with open(PUBLIC/f"index.html", 'w') as fh:
         fh.write(template.render(data=data))
