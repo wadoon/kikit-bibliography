@@ -28,6 +28,14 @@
   <h1>{{name}}</h1>
   <a href="{{name}}.csv">Export as CSV file</a>
 
+  <a href="https://dblp.uni-trier.de/pid/{{pis[name]["dblp"]}}.html">
+    <i class="ai ai-dblp"></i> DBLP (HTML)
+  </a>
+
+  <a href="https://dblp.uni-trier.de/pid/{{pis[name]["dblp"]}}.xml">
+    <i class="ai ai-dblp"></i> DBLP (XML)
+  </a>
+
   <table class="table">
     <tr>
       <!-- <th></th> -->
@@ -35,6 +43,7 @@
       <th>Year</th>
       <th>DBLP</th>
       <th>Library</th>
+      <th>Topic ESS</th>
       <th>KiKIT</th>
     </tr>
 
@@ -52,6 +61,7 @@
       <td>{{ entry.year }}</td>
       <td class="{{ entry.dblp }}">&nbsp;</td>
       <td class="{{ entry.kit }}">&nbsp;</td>
+      <td class="{{ entry.ess }}">&nbsp;</td>
       <td class="{{ entry.kikit }}">&nbsp;</td>
     </tr>
     {% endfor %}

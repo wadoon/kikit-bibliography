@@ -93,6 +93,7 @@ def _render(name):
 
     bib = _readjson(TMP/f"{name}_all.json")
     kikit = _readjson(TMP/f"{name}_kikit.json")
+    tess = _readjson(TMP/f"{name}_ESS.json")
     dblp = _readxml(TMP/f"{name}.xml")
 
     def mk_entry(b):
@@ -100,11 +101,12 @@ def _render(name):
         a.dblp = b in dblp
         a.kit = b in bib
         a.kikit = b in kikit
+        a.ess = b in tess
         if a.kit:
             a.kit_id = next(x for x in bib if x.doi == b.doi).kit_id
         return a
 
-    everything = set(bib + kikit + dblp)         # remove duplicates
+    everything = set(bib + kikit + dblp + tess)         # remove duplicates
     entries    = list(map(mk_entry, everything)) # lift to entries
     entries.sort(key = lambda x: -x.year)
     ENTRIES[name] = entries
@@ -117,7 +119,7 @@ def _render(name):
     with open(PUBLIC/f"{name}.csv", 'w', newline='') as fh:
         import csv
         writer = csv.writer(fh, dialect='excel')
-        writer.writerow(("Title", "DOI", "KIT-Id", "Year", "DBLP", "Library", "KiKIT"))
+        writer.writerow(("Title", "DOI", "KIT-Id", "Year", "DBLP", "Library", "KiKIT", "Topic ESS"))
         for entry in entries:
             writer.writerow((
                 entry.title,
@@ -125,18 +127,20 @@ def _render(name):
                 entry.kit_id,
                 entry.dblp,
                 entry.kit,
+                entry.ess,
                 entry.kikit,
             ))
 
 def render_index():
-    PI = namedtuple("PI", "name, everything, dblp, kit, kikit")
+    PI = namedtuple("PI", "name, everything, dblp, kit, kikit, ess")
     data = []
 
     for name, entries in ENTRIES.items():
         dblp  = len([x for x in entries if x.dblp])
         kit   = len([x for x in entries if x.kit])
         kikit = len([x for x in entries if x.kikit])
-        data.append(PI(name, len(entries), dblp, kit, kikit))
+        ess   = len([x for x in entries if x.ess])
+        data.append(PI(name, len(entries), dblp, kit, kikit, ess))
     
     template = env.get_template("index.html")
     with open(PUBLIC/f"index.html", 'w') as fh:
