@@ -28,6 +28,14 @@
   <h1>{{name}}</h1>
   <a href="{{name}}.csv">Export as CSV file</a>
 
+  <a href="https://dblp.uni-trier.de/pid/{{pis[name]["dblp"]}}.html">
+    <i class="ai ai-dblp"></i> DBLP (HTML)
+  </a>
+
+  <a href="https://dblp.uni-trier.de/pid/{{pis[name]["dblp"]}}.xml">
+    <i class="ai ai-dblp"></i> DBLP (XML)
+  </a>
+
   <table class="table">
     <tr>
       <!-- <th></th> -->

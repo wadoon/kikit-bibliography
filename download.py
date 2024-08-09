@@ -38,7 +38,9 @@ def _fetch(name, kit_id, dblp_id):
 
     download_to(all_pubs, TMP/f"{name}_all.json", desc="KIT Library")
     download_to(f"{all_pubs}&{KIT_TAGGING}", TMP/f"{name}_kikit.json", desc="KiKIT tagged")
-    download_to(f"{all_pubs}&programnumber=6405.105", TMP/f"{name}_ESS.json", desc="Topic ESS")
+    # TOPIC ESS
+    #download_to(f"{all_pubs}&programnumber=6405.105", TMP/f"{name}_ESS.json", desc="Topic ESS")
+    download_to(f"{all_pubs}&programnumber=is_not_empty", TMP/f"{name}_ESS.json", desc="Topic ESS")
 
 for pi, data in CONFIG.items():
     _fetch(pi, data['kit'], data['dblp'])

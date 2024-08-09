@@ -119,7 +119,7 @@ def _render(name):
     with open(PUBLIC/f"{name}.csv", 'w', newline='') as fh:
         import csv
         writer = csv.writer(fh, dialect='excel')
-        writer.writerow(("Title", "DOI", "KIT-Id", "Year", "DBLP", "Library", "KiKIT", "Topic ESS"))
+        writer.writerow(("Title", "DOI", "KIT-Id", "Year", "DBLP", "Library",  "PoF-4", "KiKIT"))
         for entry in entries:
             writer.writerow((
                 entry.title,
