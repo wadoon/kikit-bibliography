@@ -29,6 +29,7 @@ class BibEntry:
     title: str
     doi: str
     year: str
+    kit_id: str = None
 
     def __init__(self, title, doi, year=0):
         self.title, self.doi, self.year = (title, doi, int(year))
@@ -113,6 +114,19 @@ def _render(name):
     with open(PUBLIC/f"{name}.html", 'w') as fh:
         fh.write(template.render(name=name,dblp=dblp, bib=bib, kikit=kikit, entries=entries, pis=CONFIG))
 
+    with open(PUBLIC/f"{name}.csv", 'w', newline='') as fh:
+        import csv
+        writer = csv.writer(fh, dialect='excel')
+        writer.writerow(("Title", "DOI", "KIT-Id", "Year", "DBLP", "Library", "KiKIT"))
+        for entry in entries:
+            writer.writerow((
+                entry.title,
+                entry.doi,
+                entry.kit_id,
+                entry.dblp,
+                entry.kit,
+                entry.kikit,
+            ))
 
 def render_index():
     PI = namedtuple("PI", "name, everything, dblp, kit, kikit")
