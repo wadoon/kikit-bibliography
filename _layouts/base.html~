@@ -8,18 +8,25 @@
     <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
     <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-exp.min.css">
     <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre-icons.min.css">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons/css/academicons.min.css">
   </head>
 
   <body>
+    <style>
+     header {
+       border-bottom: 2px rgba(0,0,255,0.3) solid;
+     }
+     main {
+       padding:2em;
+     }
+    </style>
+
     <div class="content">
     {% block header %}
-    <header class="navbar">
-      <section class="navbar-section">
-	<a href="/key-symposium-2024" class="navbar-brand mr-2">KeY Symposium 2024</a>
-	<a href="registration.html" class="btn btn-link">Registration</a>
-	<a href="programme.html" class="btn btn-link">Programme</a>
-      </section>
+    <header>
+	{% for pi in pis %}
+	<a href="{{pi}}.html" class="btn btn-link">{{pi}}</a>
+	{% endfor %}
     </header>
     {% endblock %}
 
@@ -32,11 +39,15 @@
     {%endblock%}
 
     <footer>
-    {% block footer %}
-    {% endblock %}
+      {% block footer %}
+      {% endblock %}
+
+      <div>
+	Last generated: {{ now().isoformat() }}
+      </div>
     </footer>
 
     </div>
   </body>
-
+  <script language="javascript" src="script.js"></script>
 </html>

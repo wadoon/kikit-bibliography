@@ -1,20 +1,28 @@
 let txt = document.getElementById("txt");
+let a = document.getElementById("send");
 
 function update() {
-  let message = "Liebes KITopen-Team,\n\n";
+  let message = "Following publications should be tagged as KiKIT and added to KITopen if necessary:\n\n";
   console.log(message);
 
   let sel = document.querySelectorAll("input:checked");
 
   for(ckb of sel) {
-    let txt = sel.parentElement.nextElementSibling.innerText;
-
-    message += "  * " + txt;
+    let title = ckb.getAttribute("x-title");
+    let doi = ckb.getAttribute("x-doi");
+    let kit_id = ckb.getAttribute("x-kitid");
+    message += "\n" + doi + "\t" + kit_id + "\t" + title;
   }
 
-
-  message += "Freundliche Grüße, \n\n " + PI_NAME;
+  a.href = encodeURI("mailto:weigl@kit.edu?subject=KiKIT-Tagging&body="+message);
   txt.value = message;
+  console.log(message);
+}
+
+function selectAll() {
+  document.querySelectorAll("input")
+    .forEach(x => x.checked = true);
+  update();
 }
 
 document.querySelectorAll("input")

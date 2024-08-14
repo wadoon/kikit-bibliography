@@ -1,103 +1,155 @@
 Beckert:
   kit: "p3037.105"
   dblp: "b/BBeckert"
+  kikit: True
+  ess: False
 
 Beigl:
   kit:  "p2414.105"
   dblp: "97/4178"
+  kikit: True
+  ess: False
 
 Bläsius:
   kit:  "p12039.105"
   dblp: "74/9125"
+  kikit: True
+  ess: False
 
 Böhm:
   kit:  "p2337.105"
   dblp: "b/KBohm"
+  kikit: True
+  ess: False
 
 Dachsbacher:
   kit:  "p1313.105"
   dblp: "22/4239"
+  kikit: True
+  ess: False
 
 Friederich:
   kit:  "p6220.105"
   dblp: "182/0165"
+  kikit: True
+  ess: False
 
 Hartenstein:
   kit:  "p2525.105"
   dblp: "25/2112"
+  kikit: True
+  ess: True
 
 Henkel:
   kit:  "p2387.105"
   dblp: "h/JorgHenkel"
+  kikit: True
+  ess: False
 
 Koziolek:
   kit:  "p13667.105"
   dblp: "51/1757"
+  kikit: True
+  ess: True
 
 Künnemann:
   kit:  "p25695.105"
   dblp: "52/735"
+  kikit: True
+  ess: False
 
 Mirandola:
   kit:  "p24796.105"
   dblp: "80/191"
+  kikit: True
+  ess: False
 
 Klein:
   kit:  "nNadja%20Klein"
   dblp: "182/0680"
+  kikit: True
+  ess: False
 
 Neumann:
   kit:  "p4274.105"
   dblp: "60/4878"
+  kikit: True
+  ess: False
 
 Niehues:
   kit:  "p20309.105"
   dblp: "120/0365"
+  kikit: True
+  ess: False
 
 Platzer:
   kit:  "p23084.105"
   dblp: "55/950"
+  kikit: True
+  ess: False
 
 Reussner:
   kit:  "p2484.105"
   dblp: "r/RalfReussner"
+  kikit: True
+  ess: True
 
 Sanders:
   kit:  "p25040.105"
   dblp: "s/PeterSanders"
+  kikit: True
+  ess: False
 
 Schaefer:
   kit:  "p20864.105"
   dblp: "03/4484"
+  kikit: True
+  ess: True
 
 Schwammberger:
   kit:  "p24491.105"
   dblp: "187/5792"
+  kikit: True
+  ess: False
 
 Stamatakis:
   kit:  "p1171.105"
   dblp: "01/501"
+  kikit: True
+  ess: False
 
 Stiefelhagen:
   kit:  "p1360.105"
   dblp: "31/4699"
+  kikit: True
+  ess: False
 
 Stühmer:
   kit:  "p25565.105"
   dblp: "91/8483"
+  kikit: True
+  ess: False
 
 Tahoori:
   kit:  "p1579.105"
   dblp: "55/3589"
+  kikit: True
+  ess: False
 
 Ueckerdt:
   kit:  "p3509.105"
   dblp: "87/2203"
+  kikit: True
+  ess: False
 
 Waibel:
   kit:  "p2368.105"
   dblp: "08/2456"
+  kikit: True
+  ess: False
 
 Zitterbart:
   kit:  "p2458.105"
   dblp: "z/MZitterbart"
+  kikit: True
+  ess: True

@@ -26,30 +26,37 @@
 
 <main>
   <h1>{{name}}</h1>
-  <a href="{{name}}.csv">Export as CSV file</a>
 
-  <a href="https://dblp.uni-trier.de/pid/{{pis[name]["dblp"]}}.html">
-    <i class="ai ai-dblp"></i> DBLP (HTML)
-  </a>
+  <div>
+    Last generated: {{ now().isoformat() }}
+  </div>
 
-  <a href="https://dblp.uni-trier.de/pid/{{pis[name]["dblp"]}}.xml">
-    <i class="ai ai-dblp"></i> DBLP (XML)
-  </a>
+  <div>
+    <a href="{{name}}.csv">Export as CSV file</a>
+
+    <a href="https://dblp.uni-trier.de/pid/{{pis[name]["dblp"]}}.html">
+      <i class="ai ai-dblp"></i> DBLP (HTML)
+    </a>
+
+    <a href="https://dblp.uni-trier.de/pid/{{pis[name]["dblp"]}}.xml">
+      <i class="ai ai-dblp"></i> DBLP (XML)
+    </a>
+  </div>
 
   <table class="table">
     <tr>
-      <!-- <th></th> -->
+      <th><abbrev title="Select publication for tagging per mail. (see below)">#</abbrev></th>
       <th>Title</th>
       <th>Year</th>
       <th>DBLP</th>
       <th>Library</th>
-      <th>Topic ESS</th>
+      <th>PoF-4</th>
       <th>KiKIT</th>
     </tr>
 
     {% for entry in entries %}
     <tr>
-      <!-- <td><input type="checkbox" id="{{entry.doi}}"> -->
+        <td><input type="checkbox" id="{{entry.doi}}"  doi="{{entry.doi}}" kitid="{{entry.kit_id}}">
 	<td><label for="{{entry.doi}}"> {{ entry.title }}</label>
 	<br>
 	<span class="doi"><a href="https://doi.org/{{entry.doi}}"><i class="ai ai-doi"></i>{{entry.doi}}</a></span>
@@ -68,10 +75,12 @@
   </table>
 
 
-  <!--
+
   <h2>Mail for the library</h2>
-  <textarea id="txt" rows="25"></textarea>
-  -->
+
+  <a id="send" href="#">Open per mail</a>
+
+  <textarea id="txt" rows="25" cols="80"></textarea>
 
   <!--
   <details>

@@ -12,6 +12,8 @@ from pprint import pprint
 
 from pathlib import Path
 
+import datetime
+
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 env = Environment(
     loader=FileSystemLoader("_layouts"),
@@ -112,6 +114,8 @@ def _render(name):
     ENTRIES[name] = entries
 
     template = env.get_template("pi.html")
+    template.globals['now'] = datetime.datetime.utcnow
+
 
     with open(PUBLIC/f"{name}.html", 'w') as fh:
         fh.write(template.render(name=name,dblp=dblp, bib=bib, kikit=kikit, entries=entries, pis=CONFIG))
@@ -152,6 +156,7 @@ def render_index():
                        aggregate(entries)))
 
     template = env.get_template("index.html")
+    template.globals['now'] = datetime.datetime.utcnow
     with open(PUBLIC/f"index.html", 'w') as fh:
         fh.write(template.render(data=data))
 
