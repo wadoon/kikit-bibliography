@@ -28,13 +28,15 @@ with open("poeple.yml") as fh:
     CONFIG = yaml.safe_load(fh)
 
 class BibEntry:
+    authors: str
     title: str
     doi: str
     year: str
     kit_id: str = None
 
-    def __init__(self, title, doi, year=0):
+    def __init__(self, title, doi, year=0, authors:str=""):
         self.title, self.doi, self.year = (title, doi, int(year))
+        self.authors = authors
 
     def __eq__(self, other):
         if isinstance(other, BibEntry):
@@ -55,7 +57,8 @@ def render():
 
 def _readjson(f):
     def as_bib_entry(jpub):
-        e =  BibEntry(jpub['title'], jpub.get('DOI','n/a'), jpub['issued']['date-parts'][0][0])
+        authors = ', '.join(x['given']+' '+x['family'] for x in jpub['author'])
+        e =  BibEntry(jpub['title'], jpub.get('DOI','n/a'), jpub['issued']['date-parts'][0][0], authors)
         e.kit_id = jpub['kit-publication-id']
         return e
 
@@ -77,7 +80,8 @@ def _readxml(f):
         except:
             print(f"No DOI in {title}")
             return None
-        return BibEntry(title, doi, year)
+        authors = ', '.join(a.text for a in x.findall('author'))
+        return BibEntry(title, doi, year, authors)
 
     with open(f) as fh:
         root = ET.fromstring(fh.read())
@@ -99,7 +103,7 @@ def _render(name):
     dblp = _readxml(TMP/f"{name}.xml")
 
     def mk_entry(b):
-        a = BibEntry(b.title, b.doi, b.year)
+        a = BibEntry(b.title, b.doi, b.year, b.authors)
         a.dblp = b in dblp
         a.kit = b in bib
         a.kikit = b in kikit
