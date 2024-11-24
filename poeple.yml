@@ -153,3 +153,10 @@ Zitterbart:
   dblp: "z/MZitterbart"
   kikit: True
   ess: True
+
+Lioutikov:
+  kit: "p23260.105"
+  dblp: "151/9451"
+  kikit: True
+  ess: False
+  
