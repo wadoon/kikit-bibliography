@@ -87,7 +87,7 @@ def _readxml(f):
         root = ET.fromstring(fh.read())
         pubs = root.findall("r")
 
-        pubs = filter(lambda x: x[0].find('year').text in ('2021', '2022', '2023', '2024'),
+        pubs = filter(lambda x: x[0].find('year').text in ('2021', '2022', '2023', '2024', '2025'),
                       pubs)
         return list(filter(lambda x: x is not None, map(as_bib_entry, pubs)))
 
