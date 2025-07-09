@@ -31,9 +31,13 @@ class BibEntry:
     authors: str
     title: str
     doi: str
-    year: str
-    kit_id: str = None
-
+    year: int
+    kit_id: str | None = None
+    dblp: bool = False
+    kit: bool = False
+    kikit: bool = False
+    ess: bool = False
+    
     def __init__(self, title, doi, year=0, authors:str=""):
         self.title, self.doi, self.year = (title, doi, int(year))
         self.authors = authors
@@ -58,8 +62,9 @@ def render():
 def _readjson(f):
     def as_bib_entry(jpub):
         authors = ', '.join(x['given']+' '+x['family'] for x in jpub['author'])
-        e =  BibEntry(jpub['title'], jpub.get('DOI','n/a'), jpub['issued']['date-parts'][0][0], authors)
-        e.kit_id = jpub['kit-publication-id']
+        e =  BibEntry(jpub['title'], jpub.get('DOI','n/a'), int(jpub['issued']['date-parts'][0][0]), authors)
+        e.kit_id = jpub['kit-publication-id']        
+        #if e.year == 2025: print(e.year)
         return e
 
     try:
@@ -73,7 +78,7 @@ def _readjson(f):
 def _readxml(f):
     def as_bib_entry(x):
         x = x[0]
-        year = x.find('year').text
+        year = int(x.find('year').text)
         title = x.find('title').text
         try:
             doi = x.find('ee').text[16:]
@@ -156,7 +161,7 @@ def render_index():
 
     for name, entries in ENTRIES.items():
         data.append(PI(name,
-                       { x : aggregate_year(entries, x) for x in range(2021,2025)},
+                       { x : aggregate_year(entries, x) for x in range(2021,2026)},
                        aggregate(entries)))
 
     template = env.get_template("index.html")

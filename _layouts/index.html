@@ -9,6 +9,7 @@
  td,th {
    text-align: right;
  }
+
 </style>
 
 <main>
@@ -16,13 +17,18 @@
   <div>
     Last generated: {{ now().isoformat() }}
   </div>
+  <div>
+	KiKIT report ratio per year:
+	{% for i in range(0, 101, 10) %}
+	<span style="background:hsl( 90deg, 50%, {{i/100.0*-50+100}}%); padding: 0.2em; margin: 0.1em;">{{i}}%</span>
+	{% endfor %}
+  </div>
 
   <div class="container">
     <div class="columns">
       {% for entry in data %}
       <div class="column col-3">
 	<h2><a href="{{entry.name}}.html">{{entry.name}}</a></h2>
-
 	<table class="table">
 	  <tr>
 	    <th>Year</th>
@@ -33,7 +39,7 @@
 	    <th>KiKIT</th>
 	  </tr>
 	  {% for year, line in entry.years.items() %}
-	  <tr>
+	  <tr style="background:hsl( 90deg, 50%, {{(-0.5*line.kikit*100/line.everything)+100}}%)">	
 	    <td>{{year}}</td>
 	    <td>{{line.everything}}</td>
 	    <td><acronym title="{{"%2.f"|format(line.dblp*100/line.everything)}}%">{{line.dblp}}</acronym></td>
