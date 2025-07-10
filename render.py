@@ -99,8 +99,12 @@ def _readxml(f):
 
 ENTRIES = {}
 
+with open(TMP/"scopus.json") as fh:
+    SCOPUS = json.load(fh)
+
+
 def _render(name):
-    global ENTRIES
+    global ENTRIES, SCOPUS
 
     bib = _readjson(TMP/f"{name}_all.json")
     kikit = _readjson(TMP/f"{name}_kikit.json")
@@ -127,7 +131,8 @@ def _render(name):
 
 
     with open(PUBLIC/f"{name}.html", 'w') as fh:
-        fh.write(template.render(name=name,dblp=dblp, bib=bib, kikit=kikit, entries=entries, pis=CONFIG))
+        fh.write(template.render(name=name,dblp=dblp, bib=bib, kikit=kikit, entries=entries,
+                                 pis=CONFIG, scopus=SCOPUS.get(name, {"found": [], "not_found": []})))
 
     with open(PUBLIC/f"{name}.csv", 'w', newline='') as fh:
         import csv

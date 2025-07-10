@@ -48,12 +48,43 @@
     <a href="https://dblp.uni-trier.de/pid/{{pis[name]["dblp"]}}.xml">
       <i class="ai ai-dblp"></i> DBLP (XML)
     </a>
-  </div>
 
+    <a href="https://publikationen.bibliothek.kit.edu/auswertungen/?kit_tagging=11784.105OR11825.105OR11785.105OR11786.105OR11980.105OR11829.105OR11829.105OR11829.105OR11889.105OR11965.105OR11938.105OR12196.105&external_publications=all&open_access_availability=do_not_care&full_text=do_not_care&key_figures=number_of_publications&year=2010-&consider_online_advance_publication_date=true&consider_suborganizations=true&consider_predecessor_organizations=false&in_opac=true&column=year&contributors=%5B%5B%5B%5D%2C%5B%22{{pis[name]["kit"]}}%22%5D%5D%5D&row=in_wos_or_scopus">
+      <i class="ai ai-library"></i> KIT-Library
+    </a>
+  </div>
 
   <div>
     <a href="#" onclick="selectAll();">Select all publication.</a>
   </div>
+
+  <details>
+    <summary style="font-weight: bold; font-size:120%"><i class="ai ai-scopus"></i>Scopus check of unindexed publications in KIT-Library</summary>
+    <p>
+      The following publications are not indexed by the KIT-Library but were found in Scopus by title:
+      <ul>
+        {% for entry in scopus["found"] %}
+        <li>{{entry["TITLE"]}} <br>
+          KIT-id: <a href="https://publikationen.bibliothek.kit.edu/{{entry["KIT-ID"]}}">{{entry["KIT-ID"]}}</a>
+          <br>
+          <a href="https://www.scopus.com/pages/publications/{{entry["SCOPUS-ID"]}}">SCOPUS-ID: {{entry["SCOPUS-ID"]}}</a>
+          <br> 
+          DATE: {{entry["DATE"]}}
+          <br>
+          Venue: {{entry["VENUE"]}}
+        </li> 
+        {% endfor %}
+      </ul>
+    </p>
+    <p>
+      The following publications are not indexed by the KIT-Library and were not found in Scopus:
+      <ul>
+        {% for entry in scopus["not_found"] %}
+        <li>{{entry}}</li>
+        {% endfor %}
+      </ul>
+    </p>
+  </details>  
 
 
   <table class="table">
