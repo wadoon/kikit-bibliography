@@ -36,10 +36,9 @@ jobs:
         run: python download.py
 
       - name: Download Scopus data
-        run: python scoupusreport.py
-        with:
-          env:
-            SCOPUS_API_KEY: ${{ secrets.SCOPUS_API_KEY }}
+        run: python scopusreport.py
+        env:
+          SCOPUS_API_KEY: ${{ secrets.SCOPUS_API_KEY }}
 
       - name: Render Pages
         run: python render.py
