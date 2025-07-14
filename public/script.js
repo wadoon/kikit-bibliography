@@ -14,7 +14,7 @@ function update() {
     message += "\n" + doi + "\t" + kit_id + "\t" + title;
   }
 
-  a.href = encodeURI("mailto:weigl@kit.edu?subject=KiKIT-Tagging&body="+message);
+  a.href = encodeURI("mailto:KITopen@bibliothek.kit.edu?subject=KiKIT-Tagging&body="+message);
   txt.value = message;
   console.log(message);
 }
