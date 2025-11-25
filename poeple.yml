@@ -165,3 +165,9 @@ Meyerhenke:
   dblp: "55/3065"
   kikit: True
   ess: False
+
+Erdweg:
+  kit: "p29293.105"
+  dblp: "69/9170"
+  kikit: True
+  ess: True
