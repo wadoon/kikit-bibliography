@@ -171,3 +171,21 @@ Erdweg:
   dblp: "69/9170"
   kikit: True
   ess: True
+
+Schreiber:
+  kit: "p7738.105"
+  dblp: "178/3095-1"
+  kikit: True
+  ess: False
+
+Walzer:
+  kit: "p12070.105"
+  dblp: "139/7331"
+  kikit: True
+  ess: False
+
+Reiß:
+  kit: "p21885.105"
+  dblp: "259/5361"
+  kikit: True
+  ess: False

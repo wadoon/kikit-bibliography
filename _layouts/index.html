@@ -38,25 +38,31 @@
 	    <th>PoF-4</th>
 	    <th>KiKIT</th>
 	  </tr>
-	  {% for year, line in entry.years.items() %}
+	  {% for year, line in entry.years.items() %}      
+  	    {% set everything = line.everything %}
+        {% if everything == 0 %} {% set everything = 0.000000001 %} {%endif%}
+
+        
 	  <tr style="background:hsl( 90deg, 50%, {{(-0.5*line.kikit*100/line.everything)+100}}%)">	
 	    <td>{{year}}</td>
 	    <td>{{line.everything}}</td>
-	    <td><acronym title="{{"%2.f"|format(line.dblp*100/line.everything)}}%">{{line.dblp}}</acronym></td>
-	    <td><acronym title="({{"%2.f"|format(line.kit*100/line.everything)}}%)">{{line.kit}}</acronym></td>
-	    <td><acronym title="({{"%2.f"|format(line.ess*100/line.everything)}}%)">{{line.ess}}</acronym></td>
-	    <td><acronym title="({{"%2.f"|format(line.kikit*100/line.everything)}}%)">{{line.kikit}}</acronym></td>
+	    <td><acronym title="{{"%2.f"|format(line.dblp*100/everything)}}%">{{line.dblp}}</acronym></td>
+	    <td><acronym title="({{"%2.f"|format(line.kit*100/everything)}}%)">{{line.kit}}</acronym></td>
+	    <td><acronym title="({{"%2.f"|format(line.ess*100/everything)}}%)">{{line.ess}}</acronym></td>
+	    <td><acronym title="({{"%2.f"|format(line.kikit*100/everything)}}%)">{{line.kikit}}</acronym></td>
 	  </tr>
 	  {% endfor %}
 
-	  {% set line = entry.all %}
+      {% set line = entry.all %}
+  	  {% set everything = line.everything %}
+      {% if everything == 0 %} {% set everything = 0.000000001 %} {%endif%}
 	  <tr>
 	    <th>Sum:</td>
-	    <th>{{line.everything}}</td>
-	    <th>{{line.dblp}}   ({{"%2.f"|format(line.dblp*100/line.everything)}}%)</th>
-	    <th>{{line.kit}}     ({{"%2.f"|format(line.kit*100/line.everything)}}%)</th>
-	    <th>{{line.ess}}     ({{"%2.f"|format(line.ess*100/line.everything)}}%)</th>
-	    <th>{{line.kikit}} ({{"%2.f"|format(line.kikit*100/line.everything)}}%)</th>
+	    <th>{{everything}}</td>
+	    <th>{{line.dblp}}   ({{"%2.f"|format(line.dblp*100/everything)}}%)</th>
+	    <th>{{line.kit}}     ({{"%2.f"|format(line.kit*100/everything)}}%)</th>
+	    <th>{{line.ess}}     ({{"%2.f"|format(line.ess*100/everything)}}%)</th>
+	    <th>{{line.kikit}} ({{"%2.f"|format(line.kikit*100/everything)}}%)</th>
 	  </tr>
 
 	</table>

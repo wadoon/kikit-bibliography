@@ -18,8 +18,10 @@ import json
 from pathlib import Path
 
 TMP = Path("tmp/")
+PUBLIC = Path("public/")
 try:
     TMP.mkdir()
+    PUBLIC.mkdir()
 except:
     pass
 
@@ -29,7 +31,7 @@ with open("poeple.yml") as fh:
 
 import requests
 
-
+csv = {}  #  kit_id -> 4-Tupel
 scopus_result = {}
 
 for pi, piinfo in CONFIG.items():
@@ -80,6 +82,15 @@ for pi, piinfo in CONFIG.items():
                     scopus_result[pi]["not_found"].append(title)
                     continue
                 else:
+                    csv[r['kit-publication-id']] = (
+                        r['kit-publication-id'],
+                        data['dc:identifier'][10:],
+                        data['prism:coverDisplayDate'],
+                        data['dc:title'],
+                        data['prism:publicationName'],
+                    )
+    
+                    
                     scopus_result[pi]["found"].append({
                         "SCOPUS-ID": data['dc:identifier'][10:],
                         "KIT-ID": r['kit-publication-id'],
@@ -92,3 +103,9 @@ for pi, piinfo in CONFIG.items():
 
 
 json.dump(scopus_result, (TMP/"scopus.json").open("w"), indent=2, ensure_ascii=False)
+
+with (PUBLIC/"scopus.csv").open("w") as fh:
+    fmt = '"%s";"%s";"%s";"%s";"%s"\n'
+    fh.write(fmt%("KIT-ID", "SCOPUS-ID", "YEAR", "TITLE", "VENUE"))
+    for entry in csv.values():
+        fh.write(fmt % entry)

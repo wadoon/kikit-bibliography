@@ -58,6 +58,7 @@ def render():
         _render(pi)
 
     render_index()
+    render_overview()
 
 def _readjson(f):
     def as_bib_entry(jpub):
@@ -149,6 +150,57 @@ def _render(name):
                 entry.kikit,
             ))
 
+def render_overview():
+    import requests
+    data = []
+
+    url = f"https://publikationen.bibliothek.kit.edu/auswertungen/?kit_tagging=11784.105OR11825.105OR11785.105OR11786.105OR11980.105OR11829.105OR11829.105OR11829.105OR11889.105OR11965.105OR11938.105OR12196.105&external_publications=all&open_access_availability=do_not_care"+\
+        "&full_text=do_not_care&key_figures=number_of_publications&year=2010-&consider_online_advance_publication_date=true&consider_suborganizations=true&consider_predecessor_organizations=false"+\
+        "&in_opac=true&row=in_wos_or_scopus%2Ctype&column=year"
+
+    api = "https://publikationen.bibliothek.kit.edu/auswertungen/report.php?kit_tagging=11784.105OR11825.105OR11785.105OR11786.105OR11980.105OR11829.105OR11829.105OR11829.105OR11889.105OR11965.105OR11938.105OR12196.105"+\
+        "&external_publications=all&open_access_availability=do_not_care&full_text=do_not_care&key_figures=number_of_publications"+\
+        "&year=2010-&consider_online_advance_publication_date=true&consider_suborganizations=true&consider_predecessor_organizations=false"+\
+        "&in_opac=true&row=in_wos_or_scopus%2Ctype&column=year&format=html"
+
+    content = requests.get(api).text
+        
+    data.append({
+        "name": "__ALL__",
+        "url": url,
+        "api": api,
+        "content": content
+    })
+    
+
+
+    
+    for name, entries in CONFIG.items():
+        kit = entries['kit']
+        url = f"https://publikationen.bibliothek.kit.edu/auswertungen/?kit_tagging=11784.105OR11825.105OR11785.105OR11786.105OR11980.105OR11829.105OR11829.105OR11829.105OR11889.105OR11965.105OR11938.105OR12196.105&external_publications=all&open_access_availability=do_not_care"+\
+            "&full_text=do_not_care&key_figures=number_of_publications&year=2010-&consider_online_advance_publication_date=true&consider_suborganizations=true&consider_predecessor_organizations=false"+\
+            "&contributors=%5B%5B%5B%5D%2C%5B%22"+kit+"%22%5D%5D%5D&in_opac=true&row=in_wos_or_scopus%2Ctype&column=year"
+
+        api = "https://publikationen.bibliothek.kit.edu/auswertungen/report.php?kit_tagging=11784.105OR11825.105OR11785.105OR11786.105OR11980.105OR11829.105OR11829.105OR11829.105OR11889.105OR11965.105OR11938.105OR12196.105"+\
+            "&external_publications=all&open_access_availability=do_not_care&full_text=do_not_care&key_figures=number_of_publications"+\
+            "&year=2010-&consider_online_advance_publication_date=true&consider_suborganizations=true&consider_predecessor_organizations=false"+\
+            "&contributors=%5B%5B%5B%5D%2C%5B%22"+kit+"%22%5D%5D%5D&in_opac=true&row=in_wos_or_scopus%2Ctype&column=year&format=html"
+
+        content = requests.get(api).text
+        
+        data.append({
+            "name": name,
+            "url": url,
+            "api": api,
+            "content": content
+        })
+
+    template = env.get_template("overview.html")
+    template.globals['now'] = datetime.datetime.utcnow
+    with open(PUBLIC/"overview.html", 'w') as fh:
+        fh.write(template.render(data=data))
+
+            
 def render_index():
     Line = namedtuple("YEARS", "everything, dblp, kit, kikit, ess")
     PI = namedtuple("PI", "name, years, all")

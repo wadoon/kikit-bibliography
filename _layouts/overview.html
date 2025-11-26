@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block main %}
+<style>
+ .column {
+     border: 1px solid black;
+ }
+
+ td,th {
+     text-align: right;
+ }
+
+ .collapse, .collapsed {
+     display:none;
+ }
+
+ .collapse.in {
+     display:block;
+ }
+
+table, .table  {
+    width:auto !important;
+ }
+
+ .table td, .table th {
+     padding:1ex;
+ }
+
+th.info, td.info {
+    background: lightblue;
+ }
+ 
+</style>
+
+<main>
+  <h1>KiKIT's Friendly Publication Helper</h1>
+  <div>
+    Last generated: {{ now().isoformat() }}
+  </div>
+  <div>
+	KiKIT report ratio per year:
+	{% for i in range(0, 101, 10) %}
+	<span style="background:hsl( 90deg, 50%, {{i/100.0*-50+100}}%); padding: 0.2em; margin: 0.1em;">{{i}}%</span>
+	{% endfor %}
+  </div>
+
+  <div class="container">
+    <div class="columns">
+      {% for entry in data %}
+      <div class="column col-12">
+	      <h2><a href="{{entry.name}}.html">{{entry.name}}</a></h2>
+          <p>
+              <a href="{{entry.api}}">API Call</a> &mid;
+              <a href="{{entry.url}}">Website</a>
+          <p>
+          {{entry.content | safe}}
+      </div>
+      {%endfor%}
+    </div>
+  </div>
+</main>
+{% endblock %}
