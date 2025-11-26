@@ -178,21 +178,55 @@ def render_overview():
     for name, entries in CONFIG.items():
         kit = entries['kit']
         url = f"https://publikationen.bibliothek.kit.edu/auswertungen/?kit_tagging=11784.105OR11825.105OR11785.105OR11786.105OR11980.105OR11829.105OR11829.105OR11829.105OR11889.105OR11965.105OR11938.105OR12196.105&external_publications=all&open_access_availability=do_not_care"+\
-            "&full_text=do_not_care&key_figures=number_of_publications&year=2010-&consider_online_advance_publication_date=true&consider_suborganizations=true&consider_predecessor_organizations=false"+\
-            "&contributors=%5B%5B%5B%5D%2C%5B%22"+kit+"%22%5D%5D%5D&in_opac=true&row=in_wos_or_scopus%2Ctype&column=year"
+            "&full_text=do_not_care&key_figures=number_of_publications&consider_online_advance_publication_date=true&consider_suborganizations=true&consider_predecessor_organizations=false"+\
+            "&contributors=%5B%5B%5B%5D%2C%5B%22"+kit+"%22%5D%5D%5D&in_opac=true&row=in_wos_or_scopus%2Ctype&column=year&year=2021-"
 
         api = "https://publikationen.bibliothek.kit.edu/auswertungen/report.php?kit_tagging=11784.105OR11825.105OR11785.105OR11786.105OR11980.105OR11829.105OR11829.105OR11829.105OR11889.105OR11965.105OR11938.105OR12196.105"+\
             "&external_publications=all&open_access_availability=do_not_care&full_text=do_not_care&key_figures=number_of_publications"+\
-            "&year=2010-&consider_online_advance_publication_date=true&consider_suborganizations=true&consider_predecessor_organizations=false"+\
-            "&contributors=%5B%5B%5B%5D%2C%5B%22"+kit+"%22%5D%5D%5D&in_opac=true&row=in_wos_or_scopus%2Ctype&column=year&format=html"
+            "&consider_online_advance_publication_date=true&consider_suborganizations=true&consider_predecessor_organizations=false"+\
+            "&contributors=%5B%5B%5B%5D%2C%5B%22"+kit+"%22%5D%5D%5D&in_opac=true&row=in_wos_or_scopus%2Ctype&column=year&format=html&year=2021-"
 
         content = requests.get(api).text
+
+        "&format=excel&publications=true"
+
+        
+        url2 = f"https://publikationen.bibliothek.kit.edu/auswertungen/?kit_tagging=NOT(11784.105OR11825.105OR11785.105OR11786.105OR11980.105OR11829.105OR11829.105OR11829.105OR11889.105OR11965.105OR11938.105OR12196.105)&external_publications=all&open_access_availability=do_not_care"+\
+            "&full_text=do_not_care&key_figures=number_of_publications&year=2010-&consider_online_advance_publication_date=true&consider_suborganizations=true&consider_predecessor_organizations=false"+\
+            "&contributors=%5B%5B%5B%5D%2C%5B%22"+kit+"%22%5D%5D%5D&in_opac=true&row=in_wos_or_scopus%2Ctype&column=year"
+
+        api2 = "https://publikationen.bibliothek.kit.edu/auswertungen/report.php?kit_tagging=NOT(11784.105OR11825.105OR11785.105OR11786.105OR11980.105OR11829.105OR11829.105OR11829.105OR11889.105OR11965.105OR11938.105OR12196.105)"+\
+            "&external_publications=all&open_access_availability=do_not_care&full_text=do_not_care&key_figures=number_of_publications"+\
+            "&year=2021-&consider_online_advance_publication_date=true&consider_suborganizations=true&consider_predecessor_organizations=false"+\
+            "&contributors=%5B%5B%5B%5D%2C%5B%22"+kit+"%22%5D%5D%5D&in_opac=true&row=in_wos_or_scopus%2Ctype&column=year&format=html"
+
+        content2 = requests.get(api2).text
+
+        url_all = f"https://publikationen.bibliothek.kit.edu/auswertungen/?external_publications=all&open_access_availability=do_not_care"+\
+            "&full_text=do_not_care&key_figures=number_of_publications&year=2010-&consider_online_advance_publication_date=true&consider_suborganizations=true&consider_predecessor_organizations=false"+\
+            "&contributors=%5B%5B%5B%5D%2C%5B%22"+kit+"%22%5D%5D%5D&in_opac=true&row=in_wos_or_scopus%2Ctype&column=year"
+
+        api_all = "https://publikationen.bibliothek.kit.edu/auswertungen/report.php?external_publications=all&open_access_availability=do_not_care&full_text=do_not_care&key_figures=number_of_publications"+\
+            "&year=2021-&consider_online_advance_publication_date=true&consider_suborganizations=true&consider_predecessor_organizations=false"+\
+            "&contributors=%5B%5B%5B%5D%2C%5B%22"+kit+"%22%5D%5D%5D&in_opac=true&row=in_wos_or_scopus%2Ctype&column=year&format=html"
+
+        content_all = requests.get(api_all).text
+
+
+        def beatify(s):
+            s.replace("")
         
         data.append({
             "name": name,
             "url": url,
             "api": api,
-            "content": content
+            "content": content,
+
+            "url2": url2,
+            "api2": api2,
+            "content2": content2,
+            
+            "url_all": url_all, "api_all":api_all, "content_all": content_all
         })
 
     template = env.get_template("overview.html")

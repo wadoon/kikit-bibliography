@@ -2,8 +2,11 @@
 
 {% block main %}
 <style>
- .column {
-     border: 1px solid black;
+ body {font-size:60%;}
+ .panel { border: none !important; }
+ .column {     border-bottom: 1px solid black;
+     padding-bottom:1.5em;
+     margin-bottom:1.5em;
  }
 
  td,th {
@@ -18,42 +21,73 @@
      display:block;
  }
 
-table, .table  {
-    width:auto !important;
+ table, .table  {
+     width:auto !important;
  }
 
  .table td, .table th {
      padding:1ex;
  }
 
-th.info, td.info {
-    background: lightblue;
+ th.info, td.info {
+     background: lightblue;
  }
+
+ #key-figures-table-0-heading { display: none;}
  
 </style>
 
 <main>
   <h1>KiKIT's Friendly Publication Helper</h1>
   <div>
-    Last generated: {{ now().isoformat() }}
-  </div>
-  <div>
-	KiKIT report ratio per year:
-	{% for i in range(0, 101, 10) %}
-	<span style="background:hsl( 90deg, 50%, {{i/100.0*-50+100}}%); padding: 0.2em; margin: 0.1em;">{{i}}%</span>
-	{% endfor %}
+      Last generated: {{ now().isoformat() }}
   </div>
 
+  <div>
+      <strong>Jump to:</strong>
+      {% for entry in data %}
+      <a href="#{{entry.name}}">#{{entry.name}}</a> &nbsp;&nbsp;&mid;&nbsp;&nbsp;
+      {% endfor %}
+  </div>
+
+  
+  
   <div class="container">
     <div class="columns">
       {% for entry in data %}
       <div class="column col-12">
-	      <h2><a href="{{entry.name}}.html">{{entry.name}}</a></h2>
-          <p>
-              <a href="{{entry.api}}">API Call</a> &mid;
-              <a href="{{entry.url}}">Website</a>
-          <p>
-          {{entry.content | safe}}
+
+          <h2><a href="{{entry.name}}.html" id="{{entry.name}}">{{entry.name}}</a></h2>
+          <div>
+              <p>
+                  <a href="{{entry.api}}">API Call</a> &mid;
+                  <a href="{{entry.url}}">Website</a>
+
+                  {% if entry.url2%}
+                  &mid;                  <a href="{{entry.api2}}">API Call</a> &mid;
+                  <a href="{{entry.url2}}">Website</a>
+
+                  &mid;                  <a href="{{entry.api_all}}">API Call</a> &mid;
+                  <a href="{{entry.url_all}}">Website</a>
+                  {%endif%}
+              </p>
+
+              <h3>Tagged for KiKIT</h3>
+              <div>              
+                  {{entry.content | safe}}
+              </div>
+              {%if entry.url2%}
+              <h3><b>NOT</b> Tagged for KiKIT</h3>
+              <div>              
+                  {{entry.content2 | safe}}
+              </div>
+
+              <h3>All Publications</h3>
+              <div>              
+                  {{entry.content_all | safe}}
+              </div>
+              {%endif%}
+          </div>
       </div>
       {%endfor%}
     </div>
