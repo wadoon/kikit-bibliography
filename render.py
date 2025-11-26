@@ -211,10 +211,6 @@ def render_overview():
             "&contributors=%5B%5B%5B%5D%2C%5B%22"+kit+"%22%5D%5D%5D&in_opac=true&row=in_wos_or_scopus%2Ctype&column=year&format=html"
 
         content_all = requests.get(api_all).text
-
-
-        def beatify(s):
-            s.replace("")
         
         data.append({
             "name": name,
