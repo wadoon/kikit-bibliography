@@ -43,7 +43,7 @@
         {% if everything == 0 %} {% set everything = 0.000000001 %} {%endif%}
 
         
-	  <tr style="background:hsl( 90deg, 50%, {{(-0.5*line.kikit*100/line.everything)+100}}%)">	
+	  <tr style="background:hsl( 90deg, 50%, {{(-0.5*line.kikit*100/everything)+100}}%)">	
 	    <td>{{year}}</td>
 	    <td>{{line.everything}}</td>
 	    <td><acronym title="{{"%2.f"|format(line.dblp*100/everything)}}%">{{line.dblp}}</acronym></td>
