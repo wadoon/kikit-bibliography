@@ -7,6 +7,7 @@ import shutil
 import yaml
 import requests
 import urllib.parse
+from time import sleep
 
 from pathlib import Path
 
@@ -22,7 +23,22 @@ with open("poeple.yml") as fh:
 
 def download_to(url, fil, desc=""):
     print("\t",desc,end="")
-    r = requests.get(url, allow_redirects=True)
+
+    status = 1
+    tries = 10
+
+    while status != 200 and tries > 0:
+        tries -= 1
+        r = requests.get(url, allow_redirects=True)
+
+        if r.status_code == 200: break
+        
+        if r.status_code == 429: # To Many Requests on DBLP. Rate Limit triggered
+            # After FAQ the header should be set, but is not ra = r.headers['Retry-After']
+            print("RATE LIMIT. I am waiting.", (10-tries)*2)
+            sleep((10-tries)*2)
+        status = r.status_code
+    
     open(fil, 'wb').write(r.content)
     print(" ok")
 
