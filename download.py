@@ -36,7 +36,7 @@ def download_to(url, fil, desc=""):
         if r.status_code == 429: # To Many Requests on DBLP. Rate Limit triggered
             # After FAQ the header should be set, but is not ra = r.headers['Retry-After']
             print("RATE LIMIT. I am waiting.", (10-tries)*2)
-            sleep((10-tries)*2)
+            sleep((10-tries)*10)
         status = r.status_code
     
     open(fil, 'wb').write(r.content)
