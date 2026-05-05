@@ -248,7 +248,7 @@ def render_index():
 
     for name, entries in ENTRIES.items():
         data.append(PI(name,
-                       { x : aggregate_year(entries, x) for x in range(2021,2026)},
+                       { x : aggregate_year(entries, x) for x in range(2021,2028)},
                        aggregate(entries)))
 
     template = env.get_template("index.html")
